@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Chamber of Secrets - ITRIX 20</title>
+
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+   
+  <link rel="stylesheet" type="text/css" href="/css/hintmodal.css">
+   
+   
+   <link rel="stylesheet" type="text/css" href="/css/ham.css">
+<style type="text/css">
+  
+  h1{ 
+color: #396; 
+font-weight: 10; 
+font-size: 20px; 
+margin: 40px 0px 20px; 
+} 
+#clockdiv{ 
+  font-family: sans-serif; 
+  color: black; 
+  display: inline-block; 
+  font-weight: 50; 
+  text-align: center; 
+  font-size: 30px; 
+
+} 
+#clockdiv > div{ 
+  padding: 5px; 
+  border-radius: 3px; 
+  background: #00BF96; 
+  display: inline-block;
+  width:25%;
+  height: 10%;   
+} 
+#clockdiv div > span{ 
+  padding: 15px; 
+  border-radius: 3px; 
+  background: #00816A; 
+  display: inline-block; 
+} 
+.smalltext{ 
+  padding-top: 5px; 
+  font-size: 16px;
+  width: 25%; 
+} 
+.modal-dialog
+{
+  padding-top: 90px;
+}
+
+   .modal-content {
+
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      background-color: blue;
+
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      padding-top: 100px;
+      /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+
+    /* Movement during wrong changes */
+    .section1 {
+      animation: shake 1.1s cubic-bezier(.36, .07, .19, .97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    @keyframes shake {
+
+      10%,
+      90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+
+      20%,
+      80% {
+        transform: translate3d(2px, 0, 0);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translate3d(-4px, 0, 0);
+      }
+
+      40%,
+      60% {
+        transform: translate3d(4px, 0, 0);
+      }
+    }
+
+    .wronganswer {
+      text-align: center;
+      font-family: var(--ansfont);
+      color: red;
+      font-size: 40px;
+      display: block;
+    }
+  </style>
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/css/logged.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+  <script>
+    const year = new Date().getFullYear();
+
+
+const sixthMarch = new Date("mar 07, 2020 18:00:00").getTime();
+
+
+
+// countdown
+let timer = setInterval(function() {
+
+// get today's date
+const today = new Date().getTime();
+
+
+// get the difference
+const diff = sixthMarch - today ;
+
+
+// math
+let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+// display
+document.getElementById("timer").innerHTML =
+"<p class=\"timep\">"+hours+":"+minutes+":"+seconds+"</p>";
+
+
+
+
+
+
+},1000);
+</script>
+
+</head>
+
+<body id="fini">
+  <%- include('includes/navigation.ejs') %>
+
+  <div class="finalpage" id="finalpage" style="display: block;">
+
+
+    <div class="section1" id="section1">
+
+      <div class="container">
+
+        <div class="row justify-content-center">
+
+
+
+          <div class="col-10 col-md-6 mainsection">
+            <div class="header">
+              <!-- <p>Hola, <%= loggedUser[0].name %> </p> -->
+              <p>Hola, <%= loggedUser[0].name %> </p>
+              <p id="levelno">🏆 <%= level %></p>
+            </div>
+            
+
+            <div class="carousel">
+              <!--Carousel Begins-->
+              <section class="cd-slider">
+                <!--section-->
+
+                <ul id="changing-question">
+
+                  <% var colors = ["#FF384B", "#FF9C00", "#002AFF"] %>
+                  <% var places = ['first', 'second', 'third', 'fourth', 'fifth'] %>
+                  <% for(var i = 0; i < question.question.length; i++) { %>
+                    <li data-color="<%= colors[i%3] %>" id="<%= (i+1) %>" class="">
+                      <div class ="content" >
+                        <div class="imagecontainer">
+                          <div class="imagewrapper">
+                            <img src="<%= question.question[i] %>" alt="" class="<%= places[i] %>" >
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  <% } %>
+
+              </ul>
+                <!--navigation-->
+                <nav>
+                  <div><a href="#" class="prev"></a></div>
+                  <div><a href="#" class="next"></a></div>
+                </nav>
+              </section>
+            </div>
+
+            <div class="container" id="pagination">
+              <div class="row app" id="changing-slider">
+
+                <div class="but active">
+
+                </div>
+              
+
+              <% for(var i = 1; i < question.question.length; i++) { %>
+                  <div class="but"></div>
+              <% } %>
+
+                
+
+              </div>
+            </div>
+
+<% if(level==3) { %>
+
+            <div class="questionh3" style="padding-top:4px; padding-bottom: 5px;">
+              <h3 id="question">what is common for the above images?</h3>
+            </div>
+            <% } %>
+
+            <div class="wronganswer">
+              <p class="right" data-toggle="modal" data-target="#myModal"></p>
+              <p class="wrong"></p>
+            </div>
+
+            <div class="inputdiv">
+              
+                <input type="text" id='my' name="id" placeholder="Answer Please!" autofocus>
+                <!-- <input type="submit" id="answerbutton" > -->
+              
+
+            </div>
+
+
+            <div class="buttontag">
+
+              <div class="row">
+
+                <!-- <div class="col-6"> <button type="button" id="previous" style="color:red;"  class="pre"> previous</button> </div> -->
+                <div class="col-6"> <button type="button" id="hintbutton" data-toggle="modal" data-target="#hint"> Hint</button> </div>
+
+
+                <div class="col-6"> <button type="button" id="answerbutton">Submit</button> </div>
+                <!-- <div class="col-6"> <button type="button" id="next" style="color:green" class="nex"> next</button> </div> -->
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <div class="footer">
+  <div class="logocontainer">
+    <div class="logowrapper">
+       <a href="https://www.itrix.in" target="_blank"><img src="../asset/itrix.png" alt=""></a> 
+    </div>
+</div>
+<div class="timers">
+    <p class = "timersp">Contest Ends by</p>
+    <div id="timer">
+
+    </div>
+</div>
+ </div>
+ 
+
+  <div class="container" id="popup">
+    <div class="row queen" >
+      <i class="fa fa-times-circle" id="close" alt="close" onclick="location.reload()" ></i>
+    </div>
+
+    <div class="row king">
+      <div class="col-4 col-md-4 team1">
+        <img src="" alt="" style="width: 90%; height:90%" id="you">
+      </div>
+      <div class="col-4 col-md-4 vs">
+        <h1 id="compeletedLevel" >Level <%= level-1 %> 🆙</h1>
+
+        <div class="match">
+          😎 You 🆚 CPU 🤖
+        </div>
+      </div>
+      <div class="col-4 dcol-md-4 team2">
+        <img src="" alt="" style="width: 90%; height:90%" id="opp">
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Hurrah!! You got it Right</h4>
+        </div>
+        <div class="modal-body">
+          <img class="img-responsive" src="" alt="" style="width: 100%;">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info btn-lg" data-dismiss="modal" onclick="toggle()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="hintmodel" class="modalo">
+    <div class="modal-contento">
+      <span class="closeo" style="color:black" alt="close"><i class="fa fa-times-circle"></i></span>
+      
+      <div class="hint">    <span class="enclosed">Hint 1</span>   <p id="uuu" class="hintclass1"></p>
+      </div>
+      <div class="hint">    <span class="enclosed">Hint 2</span>  <p id="vvv" class="hintclass2"> </p>
+      </div>
+      <div class="hint">    <span class="enclosed">Hint 3</span>  <p id="www" class="hintclass3"> </p>
+      </div>
+    </div>
+  
+  </div>
+  
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3//jquery.min.js"></script>
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!--My javascript file-->
+  <script src="/js/questioncarousel1.js"></script>
+  <script>
+
+    function toggle() {
+      var blur = document.getElementById('finalpage');
+      blur.classList.toggle('active');
+      var popup = document.getElementById('popup');
+      popup.classList.toggle('active');
+    }
+    $('#close').keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+                                 if(keycode == '13'){
+                                  
+                                  toggle();
+
+                                 }
+    });
+    $('#my').keypress(function(event){               
+                   var text = document.getElementById("my").value;
+                   var texte = text.toLowerCase().replace(/\s/g,'');
+                   var keycode = (event.keyCode ? event.keyCode : event.which);
+                                 if(keycode == '13'){ 
+                                 
+                       $.ajax({
+                       type:"post",
+                       url:'/validateAnswer',
+                       data:{name: texte},
+                       success: function(jd) {
+                              
+                              if(jd.data=="1")
+                              {
+                                  
+                            
+                                 if(jd.num==7)
+                                 {
+                                    preventBack();
+                                  window.location.href = jd.redirect;
+                                  
+                                 } 
+                             else{                                              
+                                 jQuery("#myModal").modal('toggle');
+                                 $("#level-pop").replaceWith("<h1 id='level-pop'>Level " + jd.number +" 🆙</h1>");
+                                 $(".first").replaceWith("<img src='"+jd.path[0]+"' class='first'>");
+                              $(".second").replaceWith("<img src='"+jd.path[1]+"' class='second'>");
+                               $(".third").replaceWith("<img src='"+jd.path[2]+"' class='third'>");
+                                 $("#my").val('');
+                                 $("#levelno").replaceWith("<p id='levelno'>🏆"+ jd.number+"</p>");
+                                 $("#compeletedLevel").text("Level " +jd.level+ " 🆙");  
+                       
+                               $( ".img-responsive").replaceWith( "<img src='"+jd.gif+"' class='img-responsive'>");
+                               $(".match").replaceWith(" <div class='match'>😎 "+jd.curTeam.team+" 🆚 "+jd.oppTeam.team+" 🤖</div>");
+                               $("#you").replaceWith(" <img src='"+jd.curTeam.pla_photo[0]+"' alt='' id='you' style='width: 90%; height:90%'>");
+                               $("#opp").replaceWith(" <img src='"+jd.oppTeam.pla_photo[0]+"' alt='' id='opp' style='width: 90%; height:90%'>");
+                                  $(".modal fade").show("slow").delay(5000).queue(function(n) {
+                                 $(this).hide("slow");n(); 
+                               });
+                              }
+                              
+                             }
+                             else if(jd.data=='0'){   
+                           $(".wrong").replaceWith("<p class='wrong'>Wrong Answer!!</p>");
+                              $(".wrong").show("slow").delay(3500).queue(function(n) {
+                                 $(this).hide("slow");n();
+                               });
+                              } 
+                             
+                            }
+                           });
+                                 }
+                                 
+                                 event.stopPropagation();
+                             });
+                 
+                 
+                             $('#close').keypress(function(event){
+                       
+         var keycode = (event.keyCode ? event.keyCode : event.which);
+                                 if(keycode == '13'){ 
+                                   
+                                   toggle();         
+                                 }
+                                 
+                                 event.stopPropagation();
+                             });
+                 
+                 
+
+
+$('#answerbutton').on('click', function () {
+      var text = document.getElementById("my").value;
+      var texte = text.toLowerCase().replace(/\s/g,'');
+      $.ajax({
+                       type:"post",
+                       url:'/validateAnswer',
+                       data:{name: texte},
+                       success: function(jd) {
+                              
+                              if(jd.data=="1")
+                              {
+          
+                            
+                                 if(jd.num==7)
+                                 {
+                                    preventBack();
+                                  window.location.href = jd.redirect;
+                                  
+                                 } 
+                             else{                                              
+                                 jQuery("#myModal").modal('toggle');
+                                 $("#level-pop").replaceWith("<h1 id='level-pop'>Level " + jd.number +" 🆙</h1>");
+                                 $(".first").replaceWith("<img src='"+jd.path[0]+"' class='first'>");
+                              $(".second").replaceWith("<img src='"+jd.path[1]+"' class='second'>");
+                               $(".third").replaceWith("<img src='"+jd.path[2]+"' class='third'>");
+                                 $("#my").val('');
+                                 $("#levelno").replaceWith("<p id='levelno'>🏆"+ jd.number+"</p>");
+                                 $("#compeletedLevel").text("Level " +jd.level+ " 🆙");  
+                               $( ".img-responsive").replaceWith( "<img src='"+jd.gif+"' class='img-responsive'>");
+                               $(".match").replaceWith(" <div class='match'>😎 "+jd.curTeam.team+" 🆚 "+jd.oppTeam.team+" 🤖</div>");
+                               $("#you").replaceWith(" <img src='"+jd.curTeam.pla_photo[0]+"' alt='' id='you' style='width: 90%; height:90%'>");
+                               $("#opp").replaceWith(" <img src='"+jd.oppTeam.pla_photo[0]+"' alt='' id='opp' style='width: 90%; height:90%'>");
+                                  $(".modal fade").show("slow").delay(5000).queue(function(n) {
+                                 $(this).hide("slow");n(); 
+                               });
+                              }
+                              
+                             }
+                             else if(jd.data=='0'){   
+      
+                           $(".wrong").replaceWith("<p class='wrong'>Wrong Answer!!</p>");
+                              $(".wrong").show("slow").delay(3500).queue(function(n) {
+                                 $(this).hide("slow");n();
+                               });
+                              } 
+                             
+                            }
+                           });
+    });
+   
+    
+      function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+  </script>
+  <script>
+    
+    // Get the modal
+    var modal = document.getElementById("hintmodel");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementById("hintbutton");
+    var x;
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("closeo")[0];
+    
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+      clearInterval(x);
+      clearInterval(y);
+      clearInterval(z);
+
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+        clearInterval(x);
+        clearInterval(y);
+        clearInterval(z);
+
+      }
+    }
+
+    $('#hintbutton').on('click', function () {
+
+      var counta=0;
+      var countb=0;
+      var countc=0;
+
+    $.ajax({
+        type: "post",
+        url: '/findtime/',
+        success: function (jd) {
+
+     counta=jd.ht1;
+     countb=jd.ht2;
+     countc=jd.ht3;
+    
+        }});
+    var a="uuu";
+    var b="vvv";
+    var c="www";
+    // var hint1=jd.hint1;
+    // var hint2=jd.hint2;
+    // var hint3=jd.hint3;
+
+    var distance1=1;
+    var distance2=1;
+    var distance3=1;
+    
+    x = setInterval(aws1,1000);
+    y = setInterval(aws2,1000);
+    z = setInterval(aws3,1000);
+    
+    function aws1() {
+      var now = new Date().getTime();
+      var countDownDate=new Date(counta).getTime();
+  
+       distance1 = countDownDate - now;
+     // var days = Math.floor(distance1 / (1000 * 60 * 60 * 24));
+      
+      var hours = Math.floor((distance1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance1 % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance1 % (1000 * 60)) / 1000);
+      
+    
+      if (distance1 < 0) {
+
+        var no=1;
+        var num;
+    $.ajax({
+        
+        type: "post",
+        url: '/findhint/',
+        data:{num:no},
+        success: function (ab) { 
+          document.getElementById("uuu").innerHTML=ab.hint1;
+        }});
+        
+         clearInterval(x);
+        }
+        else{
+          document.getElementById("uuu").innerHTML = "Hint will be available in " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+        }
+    }
+
+    function aws2() {
+      var now = new Date().getTime();
+      var countDownDate=new Date(countb).getTime();
+    
+       distance2 = countDownDate - now;
+   
+      
+      var hours = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance2 % (1000 * 60)) / 1000);
+    
+    
+      if (distance2 < 0) {
+        var num;
+        var no=2;
+        $.ajax({
+        type: "post",
+        url: '/findhint/',
+        data:{ num : no },
+        success: function (cd) { 
+          document.getElementById("vvv").innerHTML=cd.hint2;
+        }});
+         clearInterval(y);
+        }
+        else{
+          document.getElementById("vvv").innerHTML = "Hint will be available in "  + hours + "h "
+      + minutes + "m " + seconds + "s ";
+        }
+    }
+
+    function aws3() {
+      var now = new Date().getTime();
+      var countDownDate=new Date(countc).getTime();
+
+       distance3 = countDownDate - now;
+
+      var hours = Math.floor((distance3 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance3 % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance3 % (1000 * 60)) / 1000);
+
+    
+      if (distance3 < 0) {
+        var num;
+        var no=3;
+        $.ajax({
+        type: "post",
+        url: '/findhint/',
+        data:{ num : no },
+        success: function (ef) { 
+          document.getElementById("www").innerHTML=ef.hint3;
+        }});
+         clearInterval(z);
+        }
+        else{
+          document.getElementById("www").innerHTML = "Hint will be available in " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+        }
+    } });
+
+        
+    </script>
+
+</body>
+
+</html>
